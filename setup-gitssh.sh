@@ -9,18 +9,22 @@ validate_email() {
     fi
 }
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <email>"
-    echo "You must pass exactly one parameter as the email for the SSH key comment."
+if [ "$#" -eq 0 ]; then
+    read -p "Please enter your email address: " email
+elif [ "$#" -eq 1 ]; then
+    email="$1"
+else
+    echo "Usage: $0 [email]"
+    echo "You can pass one email as a parameter or be prompted for one."
     exit 1
 fi
 
-if ! validate_email "$1"; then
+while ! validate_email "$email"; do
     echo "Invalid email format. Please provide a valid email address."
-    exit 1
-fi
+    read -p "Email: " email
+done
 
-ssh-keygen -t ed25519 -C "$1"
+ssh-keygen -t ed25519 -C "$email"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 cat ~/.ssh/id_ed25519.pub
