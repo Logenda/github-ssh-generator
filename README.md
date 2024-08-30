@@ -5,6 +5,6 @@ SSH generator script to quickly setup an account on a new machine
 ```
 git clone https://github.com/Logenda/github-ssh-generator.git
 cd github-ssh-generator
-sudo chmod +x setup-gitssh
-./setup-gitssh your.email@abc.com
+sudo chmod +x setup-gitssh.sh
+./setup-gitssh.sh your.email@abc.com
 ```
